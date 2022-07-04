@@ -24,6 +24,8 @@ class User extends Authenticatable
     //     'email',
     //     'password',
     // ];
+    Protected $primaryKey = 'email';
+    
     Protected $table = 'users';
 
     //apa saja yang tidak boleh diisi

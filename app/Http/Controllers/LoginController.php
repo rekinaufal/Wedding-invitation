@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use         DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,10 +19,18 @@ class LoginController extends Controller
             'email' => 'required|email:dns',
             'password' => 'required' 
         ]);
-
-        if(Auth::attempt($credentials)){
-            $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+        $GetDataUser1           = DB::table('users')->where('email', $credentials['email'])->get();
+        $GetDataUserStatus 	    = json_decode(json_encode($GetDataUser1[0]), true);
+        if ($GetDataUserStatus['status'] == 'Admin') {
+            if(Auth::attempt($credentials)){
+                $request->session()->regenerate();
+                return redirect()->intended('/admin');
+            }
+        }else {
+            if(Auth::attempt($credentials)){
+                $request->session()->regenerate();
+                return redirect()->intended('/dashboard');
+            }
         }
         return back()->with('loginError', 'Login Failed');
     }
