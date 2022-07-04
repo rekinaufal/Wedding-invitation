@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use         DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -23,11 +24,13 @@ class LoginController extends Controller
         $GetDataUserStatus 	    = json_decode(json_encode($GetDataUser1[0]), true);
         if ($GetDataUserStatus['status'] == 'Admin') {
             if(Auth::attempt($credentials)){
-                $request->session()->regenerate();
+                $request->session()->put('name',$GetDataUserStatus['name']);
+                // $request->session()->regenerate();
                 return redirect()->intended('/admin');
             }
         }else {
             if(Auth::attempt($credentials)){
+                $request->session()->put('name',$GetDataUserStatus['name']);
                 $request->session()->regenerate();
                 return redirect()->intended('/dashboard');
             }
@@ -38,10 +41,10 @@ class LoginController extends Controller
     public function logout(){
         // jika tidak ingin memakai Request $request, bisa memakai request()
         Auth::logout();
-
-        request()->session()->invalidate();
+        Session::flush();
+        // request()->session()->invalidate();
     
-        request()->session()->regenerateToken();
+        // request()->session()->regenerateToken();
     
         return redirect('/');
     }

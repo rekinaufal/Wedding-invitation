@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\User;
 
@@ -51,6 +52,8 @@ Route::get('/dashboard', function(){
 })->middleware('auth');  
 // jika ingin setting masuk ke register tidak harus login terlebih dahulu, pakai middleware'guest'
 // jika ingin setting tidak bisa masuk ke dashboard harus login terlebih dahulu, pakai middleware'auth'
+
+Route::get('/user', [UserController::class, 'index'])->name('user.index');
 
 Route::get('/post', [PostController::class, 'index'])->name('post.index');
 Route::get('/post/{id}', [PostController::class, 'show'])->name('post.show');
