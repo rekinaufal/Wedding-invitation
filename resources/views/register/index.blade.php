@@ -27,6 +27,10 @@
                     <input type="password" class="form-control rounded-button" name="password" id="password" placeholder="Password" required>
                     <label for="password">Password</label>
                 </div>
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="status" id="status" placeholder="status" value="User" required readonly>
+                    <label for="Status">Status</label>
+                </div>
                 <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Register</button>
             </form>
           <small class="d-block text-center mt-3">Already register ? <a href="/login">Login</a></small>

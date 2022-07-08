@@ -6,7 +6,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\MempelaiController;
+use App\Http\Controllers\PriaController;
 use App\Models\Category;
 use App\Models\User;
 
@@ -54,6 +55,13 @@ Route::get('/dashboard', function(){
 // jika ingin setting tidak bisa masuk ke dashboard harus login terlebih dahulu, pakai middleware'auth'
 
 Route::get('/user', [UserController::class, 'index'])->name('user.index');
+Route::resource('user', 'App\Http\Controllers\UserController');
+
+Route::get('/mempelai', [MempelaiController::class, 'index'])->name('mempelai.index');
+Route::resource('mempelai', 'App\Http\Controllers\MempelaiController');
+
+Route::get('/pria', [PriaController::class, 'index'])->name('pria.index');
+Route::resource('pria', 'App\Http\Controllers\PriaController');
 
 Route::get('/post', [PostController::class, 'index'])->name('post.index');
 Route::get('/post/{id}', [PostController::class, 'show'])->name('post.show');

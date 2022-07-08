@@ -20,7 +20,8 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'username' => 'required|max:255',
             'email' => 'required|email:dns|unique:users',
-            'password' => 'required|min:1|max:255'
+            'password' => 'required|min:1|max:255',
+            'status' => 'required|min:1|max:255'
         ]);
 //        $validateData['password'] = bcrypt($validateData['password']);
        $validateData['password'] = Hash::make($validateData['password']); 

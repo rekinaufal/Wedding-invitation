@@ -25,12 +25,14 @@ class LoginController extends Controller
         if ($GetDataUserStatus['status'] == 'Admin') {
             if(Auth::attempt($credentials)){
                 $request->session()->put('name',$GetDataUserStatus['name']);
+                $request->session()->put('status',$GetDataUserStatus['status']);
                 // $request->session()->regenerate();
-                return redirect()->intended('/admin');
+                return redirect()->intended('/');
             }
         }else {
             if(Auth::attempt($credentials)){
                 $request->session()->put('name',$GetDataUserStatus['name']);
+                $request->session()->put('status',$GetDataUserStatus['status']);
                 $request->session()->regenerate();
                 return redirect()->intended('/dashboard');
             }
