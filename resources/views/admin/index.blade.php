@@ -1,7 +1,7 @@
 <style>
   .nav-item > .nav-link.active  {
     color:white;
-    background-color: red;
+    background-color: gray;
 }
 </style>
 <!doctype html>
@@ -24,6 +24,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="/css/dashboard.css" rel="stylesheet">
+    <!-- Modal Bootstrap 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
   </head>
   <body>
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -97,6 +101,25 @@
         $('.navbar-item .nav-link').removeClass('active');
         $(this).addClass('active');
       });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+      $('body').on('click', '.pilih-pria', function() {
+        var val = $(this).val();
+        $.ajax({
+          type: "get",
+          url: "{{ route('DataPria') }}",
+          data: {
+            id: val
+          },
+          dataType: "json",
+            success: function (response) {
+                // $(`.salary`).text(`Gaji : ${response['data'].gaji} | NPWP : ${response['data'].upah_pokok}`);
+                $("#namapria").val(response['data'].nama);
+                $("#gambarpria").val(response['data'].gambar);
+            }
+        });
+      })
     </script>
   </body>
 </html>

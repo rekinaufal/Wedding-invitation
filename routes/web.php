@@ -82,6 +82,10 @@ Route::get('/authors/{user}', function(User $user){
         'pageTitle' => 'User Post'
     ]);
 });
+
+Route::group(['prefix' => 'api'], function () {
+    Route::get('getDataPria', 'App\Http\Controllers\ApiController@getDataPria')->name('DataPria');
+});
 // Route::get('/', function () {
 //     return view('welcome');
 // });

@@ -21,7 +21,7 @@ class MempelaiController extends Controller
     public function create()
     {
         $Mempelai = new Mempelai();
-        $Pria = new Pria();
+        $Pria = Pria::all();
         $pageTitle = self::$pageTitle;
         return view('mempelai.create', compact('Mempelai', 'pageTitle', 'Pria'));
     }
