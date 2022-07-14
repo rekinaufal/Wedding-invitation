@@ -24,6 +24,7 @@ class LoginController extends Controller
         $GetDataUserStatus 	    = json_decode(json_encode($GetDataUser1[0]), true);
         if ($GetDataUserStatus['status'] == 'Admin') {
             if(Auth::attempt($credentials)){
+                $request->session()->put('id',$GetDataUserStatus['id']);
                 $request->session()->put('name',$GetDataUserStatus['name']);
                 $request->session()->put('status',$GetDataUserStatus['status']);
                 // $request->session()->regenerate();
@@ -31,6 +32,7 @@ class LoginController extends Controller
             }
         }else {
             if(Auth::attempt($credentials)){
+                $request->session()->put('id',$GetDataUserStatus['id']);
                 $request->session()->put('name',$GetDataUserStatus['name']);
                 $request->session()->put('status',$GetDataUserStatus['status']);
                 $request->session()->regenerate();

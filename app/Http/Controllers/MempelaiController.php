@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Mempelai;
 use App\Models\Pria;
+use App\Models\Wanita;
+use App\Models\TempatAcara;
 
 class MempelaiController extends Controller
 {
@@ -22,8 +24,10 @@ class MempelaiController extends Controller
     {
         $Mempelai = new Mempelai();
         $Pria = Pria::all();
+        $Wanita = Wanita::all();
+        $TempatAcara = TempatAcara::all();
         $pageTitle = self::$pageTitle;
-        return view('mempelai.create', compact('Mempelai', 'pageTitle', 'Pria'));
+        return view('mempelai.create', compact('Mempelai', 'pageTitle', 'Pria', 'Wanita', 'TempatAcara'));
     }
 
     public function store(Request $request)

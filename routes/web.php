@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MempelaiController;
 use App\Http\Controllers\PriaController;
+use App\Http\Controllers\WanitaController;
 use App\Models\Category;
 use App\Models\User;
 
@@ -63,6 +64,12 @@ Route::resource('mempelai', 'App\Http\Controllers\MempelaiController');
 Route::get('/pria', [PriaController::class, 'index'])->name('pria.index');
 Route::resource('pria', 'App\Http\Controllers\PriaController');
 
+Route::get('/wanita', [WanitaController::class, 'index'])->name('wanita.index');
+Route::resource('wanita', 'App\Http\Controllers\WanitaController');
+
+Route::get('/tempatacara', [TempatAcaraController::class, 'index'])->name('tempatacara.index');
+Route::resource('tempatacara', 'App\Http\Controllers\TempatAcaraController');
+
 Route::get('/post', [PostController::class, 'index'])->name('post.index');
 Route::get('/post/{id}', [PostController::class, 'show'])->name('post.show');
 // menamaan pada      ini  \|/ (category) harus sama dengan ini \|/  $category  
@@ -85,6 +92,8 @@ Route::get('/authors/{user}', function(User $user){
 
 Route::group(['prefix' => 'api'], function () {
     Route::get('getDataPria', 'App\Http\Controllers\ApiController@getDataPria')->name('DataPria');
+    Route::get('getDataWanita', 'App\Http\Controllers\ApiController@getDataWanita')->name('DataWanita');
+    Route::get('getDataTempatAcara', 'App\Http\Controllers\ApiController@getDataTempatAcara')->name('DataTempatAcara');
 });
 // Route::get('/', function () {
 //     return view('welcome');

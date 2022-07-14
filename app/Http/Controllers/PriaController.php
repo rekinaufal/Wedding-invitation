@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\Pria;
 use App\Models\Mempelai;
+use Illuminate\Support\Facades\Storage;
+use DB;
+use File;
+use Illuminate\Support\Facades\Auth;
 
 class PriaController extends Controller
 {
@@ -22,9 +26,8 @@ class PriaController extends Controller
     public function create()
     {
         $Pria = new Pria();
-        $Pria = new Pria();
         $pageTitle = self::$pageTitle;
-        return view('pria.create', compact('Pria', 'pageTitle', 'Pria'));
+        return view('pria.create', compact('Pria', 'pageTitle'));
     }
 
     public function store(Request $request)
@@ -33,11 +36,12 @@ class PriaController extends Controller
 
         // $req = $request->all();
         $Pria = new Pria;
-        $Pria->nama = $request->nama;
-        $Pria->pesan = $request->pesan;
-        $Pria->facebook = $request->facebook;
-        $Pria->instagram = $request->instagram;
-        $Pria->twitter = $request->twitter;
+        $Pria->nama         = $request->nama;
+        $Pria->pesan        = $request->pesan;
+        $Pria->facebook     = $request->facebook;
+        $Pria->instagram    = $request->instagram;
+        $Pria->twitter      = $request->twitter;
+        $Pria->created_by   = Auth::user()->id;
         if($request->hasFile('gambar')){
             $file = $request->file('gambar');
             $name = $file->getClientOriginalName();
@@ -74,12 +78,37 @@ class PriaController extends Controller
         return view('pria.edit', compact('Pria', 'pageTitle'));
     }
 
-    public function update(Request $request, Pria $Pria )
-    {
-        request()->validate(Pria::$rules);
+    public function update(Request $request, $id)
+    { 
+        if($request->hasFile('gambar')){
+	        File::delete(base_path() . '/public' . $request->input('gambarold')); //hapus foto old
 
-        $req = $request->all();
-        $Pria->update($req);
+            $file = $request->file('gambar');
+            $name = $file->getClientOriginalName();
+            $file_name = Str::random(30) . '_' . $name;
+            $file->move(base_path() . '/public/assets/gambar', $file_name);
+            
+            $fieldUpdate = [
+                'nama'      => $request->input('nama'),
+                'pesan'     => $request->input('pesan'),
+                'facebook'  => $request->input('facebook'),
+                'instagram' => $request->input('instagram'),
+                'twitter'   => $request->input('twitter'),
+                'gambar'    => '/assets/gambar/' . $file_name,
+                'updated_by'=> Auth::user()->id,
+            ];
+        }else{
+            $fieldUpdate = [
+            'nama'      => $request->input('nama'),
+            'pesan'     => $request->input('pesan'),
+            'facebook'  => $request->input('facebook'),
+            'instagram' => $request->input('instagram'),
+            'twitter'   => $request->input('twitter'),
+            'updated_by'=> Auth::user()->id,
+            ];
+        }
+      
+        $update = DB::table('pria')->where('id', $id)->update($fieldUpdate);
 
         return redirect()->route('pria.index')
             ->with('success', self::$pageTitle.' updated successfully');
@@ -87,6 +116,10 @@ class PriaController extends Controller
 
     public function destroy(Request $request, $id)
     {
+        // delete file foto  
+        $gambarold = Pria::find($id);
+        File::delete(base_path() . '/public' . $gambarold->gambar); //hapus foto old
+
         $Pria = Pria::find($id)->delete();
 
         if ($request->ajax()) {

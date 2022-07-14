@@ -11,46 +11,29 @@ class Pria extends Model
     ];
     
     use HasFactory;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    // Apa saja yang boleh diisi
-    // protected $fillable = [
-    //     'name',
-    //     'username',
-    //     'email',
-    //     'password',
-    // ];
-
-    //Protected $primaryKey = 'email';
-
+    
     Protected $table = 'pria';
+    // Apa saja yang boleh diisi
+    protected $fillable = [
+        'id',
+        'nama',
+        'gambar',
+        'pesan',
+        'facebook',
+        'instagram',
+        'twitter',
+        'created_by',
+        'updated_by',
+    ];
+
+    public function user()
+    {    
+        return $this->belongsTo('App\Models\User', 'created_by', 'id');
+    }
+    // Protected $primaryKey = 'id';
+
 
     //apa saja yang tidak boleh diisi
-    protected $guarded = ['id'];
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    // protected $guarded = ['id'];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public function posts(){
-        return $this->hasMany(Post::class);
-    }
 }
