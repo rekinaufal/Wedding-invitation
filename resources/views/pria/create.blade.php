@@ -8,7 +8,7 @@
             <!-- col 1  -->
             <div class="col"> 
               <div class="form-group">
-                <label">Nama</label>
+                <label">Nama Mempelai Pria</label>
                 <input type="text" class="form-control" name="nama">
               </div>
               <div class="form-group">

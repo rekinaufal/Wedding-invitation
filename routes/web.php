@@ -9,6 +9,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MempelaiController;
 use App\Http\Controllers\PriaController;
 use App\Http\Controllers\WanitaController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\GaleriController;
 use App\Models\Category;
 use App\Models\User;
 
@@ -23,9 +25,12 @@ use App\Models\User;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (MempelaiController $mempelai) {
+    // dd($mempelai);
     return view('home', [
         'pageTitle' => "Home"
+        // ,
+        // 'pria' => $mempelai->pria_id
     ]);
 });
 
@@ -69,6 +74,22 @@ Route::resource('wanita', 'App\Http\Controllers\WanitaController');
 
 Route::get('/tempatacara', [TempatAcaraController::class, 'index'])->name('tempatacara.index');
 Route::resource('tempatacara', 'App\Http\Controllers\TempatAcaraController');
+
+Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
+Route::resource('kategori', 'App\Http\Controllers\KategoriController');
+
+Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
+Route::resource('galeri', 'App\Http\Controllers\GaleriController');
+
+Route::prefix('galeri')->group(function () {
+    Route::get('/', [\App\Http\Controllers\GaleriController::class, 'index'])->name('galeri.index');
+    Route::get('/create', [\App\Http\Controllers\GaleriController::class, 'create'])->name('galeri.create');
+    Route::post('/store', [\App\Http\Controllers\GaleriController::class, 'store'])->name('galeri.store');
+    Route::post('/store/media', [\App\Http\Controllers\GaleriController::class, 'storeMedia'])->name('galeri.storeMedia');
+    Route::get('/{id}', [\App\Http\Controllers\GaleriController::class, 'edit'])->name('galeri.edit');
+    Route::put('/{id}', [\App\Http\Controllers\GaleriController::class, 'update'])->name('galeri.update');
+    Route::delete('/{id}', [\App\Http\Controllers\GaleriController::class, 'destroy'])->name('galeri.delete');
+});
 
 Route::get('/post', [PostController::class, 'index'])->name('post.index');
 Route::get('/post/{id}', [PostController::class, 'show'])->name('post.show');

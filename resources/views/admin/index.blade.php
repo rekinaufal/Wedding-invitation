@@ -21,6 +21,15 @@
     <link href="{{ url('assets_BE/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <!-- Custom styles for this page -->
     <link href="{{ url('assets_BE/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <!-- css dropzone -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
+   <style>
+      .dz-image img {
+         width: 120px;
+         height: 120px;
+      }
+   </style>
 </head>
 
 <body id="page-top">
@@ -161,6 +170,20 @@
                 <a class="nav-link" href="/tempatacara">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tempat Acara</span></a>
+            </li>
+
+            <!-- Nav Item - Kategori -->
+            <li class="nav-item">
+                <a class="nav-link" href="/kategori">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Kategori</span></a>
+            </li>
+
+            <!-- Nav Item - Galeri -->
+            <li class="nav-item">
+                <a class="nav-link" href="/galeri">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Galeri</span></a>
             </li>
 
             <!-- Divider -->
@@ -526,6 +549,36 @@
         });
       })
     </script>
+    <!-- JS for dropzone -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+   <script>
+      var uploadedDocumentMap = {}
+      Dropzone.options.documentDropzone = {
+         url: '{{ route('galeri.storeMedia') }}',
+         maxFilesize: 2, // MB
+         addRemoveLinks: true,
+         acceptedFiles: ".jpeg,.jpg,.png,.gif",
+         headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+         },
+         success: function(file, response) {
+            $('form').append('<input type="hidden" name="gambar[]" value="' + response.name + '">')
+            uploadedDocumentMap[file.name] = response.name
+         },
+         removedfile: function(file) {
+            file.previewElement.remove()
+            var name = ''
+            if (typeof file.file_name !== 'undefined') {
+               name = file.file_name
+            } else {
+               name = uploadedDocumentMap[file.name]
+            }
+            $('form').find('input[name="gambar[]"][value="' + name + '"]').remove()
+         }
+      }
+   </script>
 </body>
 
 </html>
