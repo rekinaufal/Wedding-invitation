@@ -22,7 +22,7 @@
     <!-- Custom styles for this page -->
     <link href="{{ url('assets_BE/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <!-- css dropzone -->
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> dimatikan karena bentrok dengan datatable-->
    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
    <style>
       .dz-image img {
@@ -500,7 +500,7 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ url('assets_BE/js/demo/datatables-demo.js') }}"></script>
-    <!-- Ajax get data pria dan wanita -->
+    <!-- Ajax get data from API for mempelai -->
     <script>
       $('body').on('click', '.pilih-pria', function() {
         var val = $(this).val();
@@ -548,9 +548,24 @@
             }
         });
       })
+      $('body').on('click', '.pilih-galeri', function() {
+        var val = $(this).val();
+        $.ajax({
+          type: "get",
+          url: "{{ route('DataGaleri') }}",
+          data: {
+            created_by: val
+          },
+          dataType: "json",
+            success: function (response) {
+                $("#galeri_id").val(response['data'].created_by);
+                $("#namagaleri").val(response['data'].nama_kategori);
+            }
+        });
+      })
     </script>
     <!-- JS for dropzone -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> dicommand karna bentrok dengan datatable-->
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
    <script>

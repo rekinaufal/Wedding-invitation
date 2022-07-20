@@ -11,7 +11,9 @@ use App\Http\Controllers\PriaController;
 use App\Http\Controllers\WanitaController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Mempelai;
 use App\Models\User;
 
 /*
@@ -25,14 +27,7 @@ use App\Models\User;
 |
 */
 
-Route::get('/', function (MempelaiController $mempelai) {
-    // dd($mempelai);
-    return view('home', [
-        'pageTitle' => "Home"
-        // ,
-        // 'pria' => $mempelai->pria_id
-    ]);
-});
+Route::get('/', [Controller::class, 'index']);
 
 Route::get('/about', function () {
     return view('about', [
@@ -64,22 +59,23 @@ Route::get('/user', [UserController::class, 'index'])->name('user.index');
 Route::resource('user', 'App\Http\Controllers\UserController');
 
 Route::get('/mempelai', [MempelaiController::class, 'index'])->name('mempelai.index');
-Route::resource('mempelai', 'App\Http\Controllers\MempelaiController');
+Route::put('/mempelai/{id}/aktif', 'App\Http\Controllers\MempelaiController@aktif');
+Route::resource('mempelai', 'App\Http\Controllers\MempelaiController')->middleware('auth');
 
-Route::get('/pria', [PriaController::class, 'index'])->name('pria.index');
-Route::resource('pria', 'App\Http\Controllers\PriaController');
+Route::get('/pria', [PriaController::class, 'index'])->name('pria.index')->middleware('auth');
+Route::resource('pria', 'App\Http\Controllers\PriaController')->middleware('auth');
 
 Route::get('/wanita', [WanitaController::class, 'index'])->name('wanita.index');
-Route::resource('wanita', 'App\Http\Controllers\WanitaController');
+Route::resource('wanita', 'App\Http\Controllers\WanitaController')->middleware('auth');
 
 Route::get('/tempatacara', [TempatAcaraController::class, 'index'])->name('tempatacara.index');
-Route::resource('tempatacara', 'App\Http\Controllers\TempatAcaraController');
+Route::resource('tempatacara', 'App\Http\Controllers\TempatAcaraController')->middleware('auth');
 
 Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
-Route::resource('kategori', 'App\Http\Controllers\KategoriController');
+Route::resource('kategori', 'App\Http\Controllers\KategoriController')->middleware('auth');
 
 Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
-Route::resource('galeri', 'App\Http\Controllers\GaleriController');
+Route::resource('galeri', 'App\Http\Controllers\GaleriController')->middleware('auth');
 
 Route::prefix('galeri')->group(function () {
     Route::get('/', [\App\Http\Controllers\GaleriController::class, 'index'])->name('galeri.index');
@@ -115,6 +111,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::get('getDataPria', 'App\Http\Controllers\ApiController@getDataPria')->name('DataPria');
     Route::get('getDataWanita', 'App\Http\Controllers\ApiController@getDataWanita')->name('DataWanita');
     Route::get('getDataTempatAcara', 'App\Http\Controllers\ApiController@getDataTempatAcara')->name('DataTempatAcara');
+    Route::get('getDataGaleri', 'App\Http\Controllers\ApiController@getDataGaleri')->name('DataGaleri');
 });
 // Route::get('/', function () {
 //     return view('welcome');

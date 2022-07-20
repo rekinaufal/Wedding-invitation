@@ -31,24 +31,36 @@ class Mempelai extends Model
 
     //apa saja yang tidak boleh diisi
     protected $guarded = ['id'];
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function user()
+    {    
+        return $this->belongsTo('App\Models\User', 'created_by', 'id');
+    }
+
+    public function kategori()
+    {    
+        return $this->belongsTo('App\Models\Kategori', 'kategori_id', 'id');
+    }
+    
+    public function tempatacara()
+    {    
+        return $this->belongsTo('App\Models\TempatAcara', 'tempatacara_id', 'id');
+    }
+    
+    public function galeri()
+    {    
+        return $this->belongsTo('App\Models\Galeri', 'galeri_id', 'id');
+    }
+    
+    public function pria()
+    {    
+        return $this->belongsTo('App\Models\Pria', 'pria_id', 'id');
+    }
+    
+    public function wanita()
+    {    
+        return $this->belongsTo('App\Models\Wanita', 'wanita_id', 'id');
+    }
 
     public function posts(){
         return $this->hasMany(Post::class);
