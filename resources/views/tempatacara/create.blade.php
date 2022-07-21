@@ -8,17 +8,17 @@
           <div class="col">
             <div class="form-group">
               <label">Tempat</label>
-              <input type="text" class="form-control" name="tempat">
+              <input type="text" class="form-control" name="tempat" required>
             </div>
             <div class="form-outline">
               <label">Pesan</label>
-              <textarea class="form-control" rows="8" name="pesan"></textarea>
+              <textarea class="form-control" rows="8" name="pesan" required></textarea>
             </div>
           </div>
           <div class="col">
             <div class="form-group">
               <label">Tanggal</label>
-              <input type="date" class="form-control" name="tanggal">
+              <input type="date" class="form-control" name="tanggal" required>
             </div>
             <div class="form-group">
               <label">Waktu</label>
@@ -28,7 +28,7 @@
             </div>
             <div class="form-group">
               <label">Gambar</label>
-              <input type="file" class="form-control" name="gambar">
+              <input type="file" class="form-control" name="gambar" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>

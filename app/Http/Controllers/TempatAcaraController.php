@@ -56,9 +56,8 @@ class TempatAcaraController extends Controller
 
     public function show ($id)
     {
-        $TempatAcara = TempatAcara::find($id);
+        $TempatAcara = TempatAcara::find(decrypt($id));
         $pageTitle = self::$pageTitle;
-
         return view ('tempatacara.show', compact('pageTitle', 'TempatAcara'));
     }
 

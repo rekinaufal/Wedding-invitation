@@ -2,9 +2,15 @@
 @section('content')
 <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary">Data Tempat Acara</h6>
-    <a href="{{ route('tempatacara.create') }}" class="btn btn-sm btn-primary">
+    <!-- <a href="{{ route('tempatacara.create') }}" class="btn btn-sm btn-primary">
       <i class="fa fa-plus" style="color:white"></i>
-    </a>
+    </a> -->
+    <a href="{{ route('tempatacara.create') }}" class="btn btn-primary btn-icon-split">
+      <span class="icon text-white-50">
+          <i class="fas fa-plus"></i>
+      </span>
+      <span class="text">Tambah Data</span>
+    </a>  
 </div>
 <div class="card-body">
   <div class="table-responsive">
@@ -40,10 +46,13 @@
               <td>{{ $item->pesan }}</td>
               <td><img src="{{ $item->gambar }}" width="100%"></td>
               <td>{{ $item->user->name ?? 'unknows' }}</td>
-              <td align="center"> 
+              <td align="center" width="16%"> 
                 <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('tempatacara.destroy', $item->id) }}" method="POST">
                   <a href="{{ route('tempatacara.edit', Crypt::encrypt($item->id)) }}" class="btn btn-sm btn-primary">
                     <i class="fa fa-edit" style="color:white"></i>
+                  </a>
+                  <a href="{{ route('tempatacara.show', Crypt::encrypt($item->id)) }}" class="btn btn-sm btn-success">
+                    <i class="fa fa-eye" style="color:white"></i>
                   </a>
                   @csrf
                   @method('DELETE')   

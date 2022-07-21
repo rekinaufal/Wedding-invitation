@@ -6,7 +6,7 @@
         @csrf 
           <div class="form-group">
             <label">Nama Kategori</label>
-            <input type="text" class="form-control" name="nama">
+            <input type="text" class="form-control" name="nama" required>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
       </form>

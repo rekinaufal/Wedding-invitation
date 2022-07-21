@@ -2,9 +2,15 @@
 @section('content')
 <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary">Data Users</h6>
-    <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary">
+    <!-- <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary">
       <i class="fa fa-plus" style="color:white"></i>
-    </a>
+    </a> -->
+    <a href="{{ route('user.create') }}" class="btn btn-primary btn-icon-split">
+      <span class="icon text-white-50">
+          <i class="fas fa-plus"></i>
+      </span>
+      <span class="text">Tambah Data</span>
+    </a>  
 </div>
 <div class="card-body">
   <div class="table-responsive">

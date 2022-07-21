@@ -56,7 +56,7 @@ class WanitaController extends Controller
 
     public function show ($id)
     {
-        $Wanita = Wanita::find($id);
+        $Wanita = Wanita::find(decrypt($id));
         $pageTitle = self::$pageTitle;
 
         return view ('wanita.show', compact('pageTitle', 'Wanita'));
